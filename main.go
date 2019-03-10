@@ -21,9 +21,11 @@ func main() {
 func startServer() {
 	router := mux.NewRouter()
 	router.HandleFunc("/api", apiHandler).Methods("GET")
+	router.HandleFunc("/api/balance", balanceHandler).Methods("GET")
 	router.PathPrefix("/").HandlerFunc(staticFilesHandler)
 
 	handler := cors.Default().Handler(router)
+
 	fmt.Println("Server is running on port 8181: http://localhost:8181")
 	err := http.ListenAndServe(":8181", handler)
 	if err != nil {
@@ -39,17 +41,18 @@ func staticFilesHandler(w http.ResponseWriter, r *http.Request) {
 	}
 
 	if strings.HasSuffix(url, ".html") {
-		w.Header().Set("Content-Type", "text/html; charset=utf-8")
+		w.Header().Set("Content-Type", "text/html")
 	} else if strings.HasSuffix(url, ".css") {
-		w.Header().Set("Content-Type", "text/css; charset=utf-8")
+		w.Header().Set("Content-Type", "text/css")
 	} else if strings.HasSuffix(url, ".js") {
-		w.Header().Set("Content-Type", "text/javascript; charset=utf-8")
+		w.Header().Set("Content-Type", "text/javascript")
 	}
 
 	bytes, err := Asset("static" + url)
 	if err != nil {
 		fmt.Println(err)
 		w.Write([]byte("Could not find " + url))
+		w.WriteHeader(http.StatusNotFound)
 		return
 	}
 	w.Write(bytes)

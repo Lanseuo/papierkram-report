@@ -25,12 +25,15 @@
             <header class="card-header">
                 <p class="card-header-title">Balance</p>
             </header>
-            <div class="card-content">
+            <div id="balance-loading" class="card-content has-text-centered">
+                <a class="button is-warning is-loading">Loading</a>
+            </div>
+            <div id="balance-content" class="card-content">
                 <div class="content has-text-centered">
                     <p>Your current balance is</p>
-                    <span id="balance-amount" class="is-size-1">5 €</span>
+                    <span id="balance-amount" class="is-size-1"></span>
                     <p>Your expected balance including unpaid invoices and receipts is</p>
-                    <span id="expected-balance-amount" class="is-size-3">5 €</span>
+                    <span id="expected-balance-amount" class="is-size-3"></span>
                 </div>
             </div>
         </div>
