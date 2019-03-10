@@ -23,12 +23,13 @@ func main() {
 		log.Fatalln(err)
 	}
 
-	balance, err := calculateBalance(receipts, invoices)
+	balance, expectedBalance, err := calculateBalance(receipts, invoices)
 	if err != nil {
 		log.Fatalln(err)
 	}
 
 	fmt.Println("Balance:", balance)
+	fmt.Println("Expected Balance:", expectedBalance)
 }
 
 // Unzip will decompress a zip archive, moving all files and folders

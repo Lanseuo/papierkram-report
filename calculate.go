@@ -4,17 +4,24 @@ import (
 	"math"
 )
 
-func calculateBalance(receipts []Receipt, invoices []Invoice) (float64, error) {
-	var balance float64
-
+func calculateBalance(receipts []Receipt, invoices []Invoice) (balance, expectedBalance float64, err error) {
 	for _, receipt := range receipts {
-		balance += receipt.NetAmount
+		expectedBalance += receipt.NetAmount
+
+		if receipt.PaymentDate != "" {
+			balance += receipt.NetAmount
+		}
 	}
 
 	for _, invoice := range invoices {
-		balance += invoice.NetAmount
+		expectedBalance += invoice.NetAmount
+
+		if invoice.PaidAmount == invoice.GrossAmount {
+			balance += invoice.NetAmount
+		}
 	}
 
 	roundedBalance := math.Round(balance*100) / 100
-	return roundedBalance, nil
+	expectedRoundedBalance := math.Round(expectedBalance*100) / 100
+	return roundedBalance, expectedRoundedBalance, nil
 }
