@@ -7,10 +7,36 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Papierkram Report</title>
     <link href="style.css" rel="stylesheet">
-    <script src="main.js"></script>
+    <link href="bulma.min.css" rel="stylesheet">
 </head>
 
 <body>
+    <section class="hero is-primary has-background-link">
+        <div class="hero-body">
+            <div class="container">
+                <h1 class="title">Papierkram Report</h1>
+                <h2 class="subtitle">Analyse your balance</h2>
+            </div>
+        </div>
+    </section>
+
+    <div class="columns is-centered">
+        <div id="balance" class="card column is-half">
+            <header class="card-header">
+                <p class="card-header-title">Balance</p>
+            </header>
+            <div class="card-content">
+                <div class="content has-text-centered">
+                    <p>Your current balance is</p>
+                    <span id="balance-amount" class="is-size-1">5 €</span>
+                    <p>Your expected balance including unpaid invoices and receipts is</p>
+                    <span id="expected-balance-amount" class="is-size-3">5 €</span>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <script src="main.js"></script>
 </body>
 
 </html>
