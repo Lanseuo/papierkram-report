@@ -5,31 +5,54 @@ import (
 	"fmt"
 	"io"
 	"log"
+	"net/http"
 	"os"
 	"path/filepath"
 	"strings"
+
+	"github.com/gorilla/mux"
+	"github.com/rs/cors"
 )
 
 func main() {
-	zipFilepath := os.Args[1]
-	Unzip(zipFilepath, "/tmp/papierkram-report")
-	receipts, err := ParseReceipts()
+	startServer()
+}
+
+func startServer() {
+	router := mux.NewRouter()
+	router.HandleFunc("/api", apiHandler).Methods("GET")
+	router.PathPrefix("/").HandlerFunc(staticFilesHandler)
+
+	handler := cors.Default().Handler(router)
+	fmt.Println("Server is running on port 8181: http://localhost:8181")
+	err := http.ListenAndServe(":8181", handler)
 	if err != nil {
-		log.Fatalln(err)
+		log.Fatalln("Cannot start http server on port 8181")
 	}
 
-	invoices, err := ParseInvoices()
-	if err != nil {
-		log.Fatalln(err)
+}
+
+func staticFilesHandler(w http.ResponseWriter, r *http.Request) {
+	url := r.URL.String()
+	if url == "/" {
+		url = "/index.html"
 	}
 
-	balance, expectedBalance, err := calculateBalance(receipts, invoices)
-	if err != nil {
-		log.Fatalln(err)
+	if strings.HasSuffix(url, ".html") {
+		w.Header().Set("Content-Type", "text/html; charset=utf-8")
+	} else if strings.HasSuffix(url, ".css") {
+		w.Header().Set("Content-Type", "text/css; charset=utf-8")
+	} else if strings.HasSuffix(url, ".js") {
+		w.Header().Set("Content-Type", "text/javascript; charset=utf-8")
 	}
 
-	fmt.Println("Balance:", balance)
-	fmt.Println("Expected Balance:", expectedBalance)
+	bytes, err := Asset("static" + url)
+	if err != nil {
+		fmt.Println(err)
+		w.Write([]byte("Could not find " + url))
+		return
+	}
+	w.Write(bytes)
 }
 
 // Unzip will decompress a zip archive, moving all files and folders

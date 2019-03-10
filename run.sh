@@ -1,0 +1,3 @@
+go-bindata -o=assets.go --nocompress --nometadata --pkg=main static/...
+go build
+./papierkram-report
