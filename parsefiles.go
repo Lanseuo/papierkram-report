@@ -4,7 +4,10 @@ import (
 	"bufio"
 	"encoding/csv"
 	"io"
+	"log"
 	"os"
+	"strconv"
+	"strings"
 )
 
 type Receipt struct {
@@ -15,9 +18,9 @@ type Receipt struct {
 	PaymentTerm       string
 	PaymentDate       string
 	State             string
-	NetAmount         string
+	NetAmount         float64
 	Vat               string
-	GrossAmount       string
+	GrossAmount       float64
 	EquityRatio       string
 	PlaceOfOrigin     string
 	Category          string
@@ -37,12 +40,17 @@ func ParseReceipts() ([]Receipt, error) {
 
 	var receipts []Receipt
 
-	for {
+	for index := 0; true; index++ {
 		line, err := reader.Read()
 		if err == io.EOF {
 			break
 		} else if err != nil {
 			return nil, err
+		}
+
+		// Remove header
+		if index == 0 {
+			continue
 		}
 
 		receipts = append(receipts, Receipt{
@@ -53,9 +61,9 @@ func ParseReceipts() ([]Receipt, error) {
 			PaymentTerm:       line[4],
 			PaymentDate:       line[5],
 			State:             line[6],
-			NetAmount:         line[7],
+			NetAmount:         parseAmount(line[7]),
 			Vat:               line[8],
-			GrossAmount:       line[9],
+			GrossAmount:       parseAmount(line[9]),
 			EquityRatio:       line[10],
 			PlaceOfOrigin:     line[11],
 			Category:          line[12],
@@ -67,4 +75,13 @@ func ParseReceipts() ([]Receipt, error) {
 	}
 
 	return receipts, nil
+}
+
+func parseAmount(s string) float64 {
+	sWithPoint := strings.Replace(s, ",", ".", -1)
+	amount, err := strconv.ParseFloat(sWithPoint, 64)
+	if err != nil {
+		log.Fatal(err)
+	}
+	return amount
 }
