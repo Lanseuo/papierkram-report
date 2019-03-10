@@ -18,13 +18,17 @@ func main() {
 		log.Fatalln(err)
 	}
 
-	fmt.Printf("%+v\n", receipts)
-
 	invoices, err := ParseInvoices()
 	if err != nil {
 		log.Fatalln(err)
 	}
-	fmt.Printf("%+v\n", invoices)
+
+	balance, err := calculateBalance(receipts, invoices)
+	if err != nil {
+		log.Fatalln(err)
+	}
+
+	fmt.Println("Balance:", balance)
 }
 
 // Unzip will decompress a zip archive, moving all files and folders
