@@ -15,10 +15,16 @@ func main() {
 	Unzip(zipFilepath, "/tmp/papierkram-report")
 	receipts, err := ParseReceipts()
 	if err != nil {
-		log.Fatal(err)
+		log.Fatalln(err)
 	}
 
-	fmt.Println(receipts)
+	fmt.Printf("%+v\n", receipts)
+
+	invoices, err := ParseInvoices()
+	if err != nil {
+		log.Fatalln(err)
+	}
+	fmt.Printf("%+v\n", invoices)
 }
 
 // Unzip will decompress a zip archive, moving all files and folders
