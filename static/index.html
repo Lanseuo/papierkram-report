@@ -8,6 +8,7 @@
     <title>Papierkram Report</title>
     <link href="style.css" rel="stylesheet">
     <link href="bulma.min.css" rel="stylesheet">
+    <link href="chart.min.css" rel="stylesheet">
 </head>
 
 <body>
@@ -23,7 +24,7 @@
     <div class="columns is-centered">
         <div id="balance" class="card column is-half">
             <header class="card-header">
-                <p class="card-header-title">Balance</p>
+                <p class="card-header-title">Current Balance</p>
             </header>
             <div id="balance-loading" class="card-content has-text-centered">
                 <a class="button is-warning is-loading">Loading</a>
@@ -37,9 +38,26 @@
                 </div>
             </div>
         </div>
-
     </div>
-    <script src="main.js"></script>
+
+    <div class="columns is-centered">
+        <div id="balance-development" class="card column is-half">
+            <header class="card-header">
+                <p class="card-header-title">Balance Development</p>
+            </header>
+            <div id="balance-development-loading" class="card-content has-text-centered">
+                <a class="button is-warning is-loading">Loading</a>
+            </div>
+            <div id="balance-development-content" class="card-content">
+                <div class="content has-text-centered">
+                    <canvas id="balance-development-chart" width="400" height="200"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="main.js" type="module"></script>
+    <script src="chart.min.js"></script>
 </body>
 
 </html>
