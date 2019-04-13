@@ -17,17 +17,20 @@ import (
 
 func main() {
 	zipFilepath := flag.String("filepath", "", "ZIP-File exported from papierkram.de")
+	port := flag.Int("port", 8181, "Port for webserver")
+
 	flag.Parse()
+
 	err := unzip(*zipFilepath)
 	if err != nil {
 		log.Fatalln("Unable to unzip file", err)
 	}
 
 	parseData()
-	startServer()
+	startServer(*port)
 }
 
-func startServer() {
+func startServer(port int) {
 	router := mux.NewRouter()
 	router.HandleFunc("/api", apiHandler).Methods("GET")
 	router.HandleFunc("/api/balance", balanceHandler).Methods("GET")
@@ -35,10 +38,10 @@ func startServer() {
 
 	handler := cors.Default().Handler(router)
 
-	fmt.Println("Server is running on port 8181: http://localhost:8181")
-	err := http.ListenAndServe(":8181", handler)
+	fmt.Printf("Server is running on port %d: http://localhost:%d\n", port, port)
+	err := http.ListenAndServe(fmt.Sprintf(":%d", port), handler)
 	if err != nil {
-		log.Fatalln("Cannot start http server on port 8181")
+		log.Fatalf("Cannot start http server on port %d\n", port)
 	}
 
 }
