@@ -2,6 +2,7 @@ package main
 
 import (
 	"archive/zip"
+	"flag"
 	"fmt"
 	"io"
 	"log"
@@ -15,6 +16,14 @@ import (
 )
 
 func main() {
+	exportFilepath := flag.String("filepath", "", "ZIP-File exported from papierkram.de")
+	flag.Parse()
+	_, err := Unzip(*exportFilepath, "/tmp/papierkram-report")
+	if err != nil {
+		log.Fatalln("Unable to unzip export file", err)
+	}
+
+	parseData()
 	startServer()
 }
 

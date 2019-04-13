@@ -9,7 +9,7 @@ type Data struct {
 
 var data Data
 
-func init() {
+func parseData() {
 	receipts, err := ParseReceipts()
 	if err != nil {
 		log.Fatalln(err)
