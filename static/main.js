@@ -10,7 +10,15 @@ function balance() {
         .then(response => response.json())
         .then(data => {
             balanceAmountElement.innerText = data.balance + ' €'
+            if (data.balance < 0) {
+                balanceAmountElement.classList.add('has-text-danger')
+            }
+
             expectedBalanceAmountElement.innerText = data.expectedBalance + ' €'
+            if (data.expectedBalance < 0) {
+                expectedBalanceAmountElement.classList.add('has-text-danger')
+            }
+
             balanceLoadingElement.style.display = 'none'
             balanceContentElement.style.display = 'block'
         })
