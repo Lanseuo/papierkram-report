@@ -34,6 +34,7 @@ func startServer(port int) {
 	router := mux.NewRouter()
 	router.HandleFunc("/api", apiHandler).Methods("GET")
 	router.HandleFunc("/api/balance", balanceHandler).Methods("GET")
+	router.HandleFunc("/api/balance/development", balanceDevelopmentHandler).Methods("GET")
 	router.PathPrefix("/").HandlerFunc(staticFilesHandler)
 
 	handler := cors.Default().Handler(router)

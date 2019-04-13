@@ -28,3 +28,19 @@ func balanceHandler(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json")
 	json.NewEncoder(w).Encode(responseData)
 }
+
+func balanceDevelopmentHandler(w http.ResponseWriter, r *http.Request) {
+	months, err := calculateBalanceDevelopment(data.receipts, data.invoices)
+	if err != nil {
+		log.Fatalln(err)
+	}
+
+	responseData := struct {
+		Months []Month `json:"months"`
+	}{
+		Months: months,
+	}
+
+	w.Header().Set("Content-Type", "application/json")
+	json.NewEncoder(w).Encode(responseData)
+}
