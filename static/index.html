@@ -56,6 +56,22 @@
         </div>
     </div>
 
+    <div class="columns is-centered">
+        <div id="revenue" class="card column is-half">
+            <header class="card-header">
+                <p class="card-header-title">Revenue</p>
+            </header>
+            <div id="revenue-loading" class="card-content has-text-centered">
+                <a class="button is-warning is-loading">Loading</a>
+            </div>
+            <div id="revenue-content" class="card-content">
+                <div class="content has-text-centered">
+                    <canvas id="revenue-chart" width="400" height="200"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <script src="main.js" type="module"></script>
     <script src="chart.min.js"></script>
 </body>
