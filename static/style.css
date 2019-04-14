@@ -1,5 +1,9 @@
 .hero {
-    margin-bottom: 50px;
+    margin-bottom: 25px;
+}
+
+.card {
+    margin-top: 25px;
 }
 
 #balance-loading, #balance-content {
