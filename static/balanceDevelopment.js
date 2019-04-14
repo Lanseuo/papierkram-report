@@ -26,7 +26,4 @@ export function balanceDevelopment() {
         .catch(error => {
             console.error(error)
         })
-
-
-
 }

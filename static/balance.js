@@ -9,12 +9,12 @@ export function balance() {
     fetch('http://localhost:8181/api/balance')
         .then(response => response.json())
         .then(data => {
-            balanceAmountElement.innerText = data.balance + ' €'
+            balanceAmountElement.innerText = formatBalance(data.balance) + ' €'
             if (data.balance < 0) {
                 balanceAmountElement.classList.add('has-text-danger')
             }
 
-            expectedBalanceAmountElement.innerText = data.expectedBalance + ' €'
+            expectedBalanceAmountElement.innerText = formatBalance(data.expectedBalance) + ' €'
             if (data.expectedBalance < 0) {
                 expectedBalanceAmountElement.classList.add('has-text-danger')
             }
@@ -25,4 +25,8 @@ export function balance() {
         .catch(error => {
             console.error(error)
         })
+}
+
+function formatBalance(balance) {
+    return parseFloat(Math.round(balance * 100) / 100).toFixed(2);
 }
