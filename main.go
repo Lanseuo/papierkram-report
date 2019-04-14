@@ -35,6 +35,7 @@ func startServer(port int) {
 	router.HandleFunc("/api", apiHandler).Methods("GET")
 	router.HandleFunc("/api/balance", balanceHandler).Methods("GET")
 	router.HandleFunc("/api/balance/development", balanceDevelopmentHandler).Methods("GET")
+	router.HandleFunc("/api/revenue", revenueHandler).Methods("GET")
 	router.PathPrefix("/").HandlerFunc(staticFilesHandler)
 
 	handler := cors.Default().Handler(router)
@@ -44,7 +45,6 @@ func startServer(port int) {
 	if err != nil {
 		log.Fatalf("Cannot start http server on port %d\n", port)
 	}
-
 }
 
 func staticFilesHandler(w http.ResponseWriter, r *http.Request) {
