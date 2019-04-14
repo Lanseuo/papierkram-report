@@ -6,7 +6,7 @@ export function balance() {
 
     balanceLoadingElement.style.display = 'block'
 
-    fetch('/api/balance')
+    fetch('http://localhost:8181/api/balance')
         .then(response => response.json())
         .then(data => {
             balanceAmountElement.innerText = data.balance + ' €'
