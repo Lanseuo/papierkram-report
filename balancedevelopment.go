@@ -33,7 +33,7 @@ func calculateBalanceDevelopment(receipts []Receipt, invoices []Invoice) ([]Mont
 			}
 		}
 
-		months[monthIndex].Balance = balanceAfterMonth
+		months[monthIndex].Balance = roundBalance(balanceAfterMonth)
 	}
 
 	return months, nil

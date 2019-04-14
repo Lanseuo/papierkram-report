@@ -21,7 +21,11 @@ func calculateBalance(receipts []Receipt, invoices []Invoice) (balance, expected
 		}
 	}
 
-	roundedBalance := math.Round(balance*100) / 100
-	expectedRoundedBalance := math.Round(expectedBalance*100) / 100
+	roundedBalance := roundBalance(balance)
+	expectedRoundedBalance := roundBalance(expectedBalance)
 	return roundedBalance, expectedRoundedBalance, nil
+}
+
+func roundBalance(balance float64) float64 {
+	return math.Round(balance*100) / 100
 }
